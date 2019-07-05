@@ -1,12 +1,17 @@
-.PHONY: libcpp
+.PHONY: native/test native/clean;
+FORCE: ;
 
-libcpp: libcpp-clean libcpp-build libcpp-test
+native/main.o: native/main.cpp native/main.h
+	/usr/bin/g++ native/main.cpp -fPIC -shared -lpthread -o native/main.o
 
-libcpp-clean:
-	rm libtorrent-data/*.o
+native/test.o: native/test.c native/main.h
+	/usr/bin/gcc -c native/test.c -o native/test.o
 
-libcpp-build:
-	/usr/bin/g++ libtorrent-data/main.cpp -lpthread -o libtorrent-data/main.o
+native/test: native/main.o native/test.o
+	/usr/bin/g++ native/main.o native/test.o -o native/test
 
-libcpp-test:
-	./libtorrent-data/main.o
+native/clean:
+	rm -f native/*.o native/test
+	touch native/main.cpp
+
+clean: native/clean
