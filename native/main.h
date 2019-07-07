@@ -7,6 +7,9 @@ extern "C" {
 
 void printHello();
 
+void init_host(char* url);
+void init_magnet(const char* url);
+
 #ifdef __cplusplus
 }
 #endif
