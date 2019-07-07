@@ -7,8 +7,8 @@ extern "C" {
 
 void printHello();
 
-void init_host(char* url);
-void init_magnet(const char* url);
+int init_host(const char** files, const unsigned int files_count, char* to_url);
+int init_magnet(const char* url);
 
 #ifdef __cplusplus
 }
