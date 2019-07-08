@@ -119,6 +119,14 @@ namespace ltd {
         }
     }*/
 
+    /**
+     * Adds a set of file paths to an instance of libtorrent
+     * file storage.
+     *
+     * @param fs            The file storage to add files to.
+     * @param files         The file paths to add.
+     * @param files_count   The number of files.
+     */
     int fs_add_files(lt::file_storage& fs, const char** files, const unsigned int files_count) {
         for (unsigned int i = 0; i < files_count; i++) {
             lt::add_files(fs, files[i]);
@@ -132,6 +140,12 @@ namespace ltd {
         return 0;
     }
 
+    /**
+     * Initializes a torrent with the defined trackers & creator
+     * metadata.
+     *
+     * @param torrent       The "create_torrent" instance to add them to.
+     */
     int torrent_create(lt::create_torrent& torrent) {
         for (std::string& tracker : m_torrent_trackers) {
             torrent.add_tracker(tracker);
@@ -141,6 +155,13 @@ namespace ltd {
         return 0;
     }
 
+    /**
+     * Sets an SHA1 hash for each file in a torrent.
+     *
+     * @param torrent       The "create_torrent" to specify hashes for.
+     * @param files         The file paths to hash.
+     * @param files_count   The number of files.
+     */
     int torrent_hash_files(lt::create_torrent& torrent, const char** files, const unsigned int files_count) {
         lt::hasher hash;
         for (unsigned int i = 0; i < files_count; i++) {
@@ -156,6 +177,13 @@ namespace ltd {
         return 0;
     }
 
+    /**
+     * Generates a torrent file and writes it to a specified file
+     * path.
+     *
+     * @param torrent       The "create_torrent" to generate the file from.
+     * @param file          The file path to write to.
+     */
     int torrent_write(lt::create_torrent torrent, std::string file) {
         std::vector<char> temp;
         lt::bencode(std::back_inserter(temp), torrent.generate());
@@ -195,7 +223,7 @@ extern "C" {
         
         strncpy(url_buffer, magnet_uri.c_str(), url_buffer_size-1);
 
-        ltd::torrent_host("bit.torrent");
+        //ltd::torrent_host("bit.torrent");
 
         return 0;
     }
