@@ -4,14 +4,20 @@
 
 #include "main.h"
 
+#define URL_BUFFER_SIZE 160
+
 int main() {
-    char cwd[99];
+    char cwd[URL_BUFFER_SIZE];
     getcwd(cwd, sizeof(cwd));
     
     const char* files[] = { strcat(cwd, "/Makefile") };
-    char url[99];
+    char url[URL_BUFFER_SIZE];
+    url[URL_BUFFER_SIZE-1] = '\0';
     
-    init_host(files, 1, url);
+    if (init_host(files, 1, url, URL_BUFFER_SIZE)) {
+        printf("Failed to init torrent host.");
+        return 1;
+    }
 
     printf("Magic URL: %s\n", url);
 

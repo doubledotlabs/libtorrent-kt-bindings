@@ -1,4 +1,4 @@
-GXX_ARGS = -std=c++11 -lssl -lcrypto -lboost_system -lpthread -lboost_thread -ltorrent-rasterbar
+GXX_ARGS = -std=c++11 -lboost_system -lpthread -lboost_thread -ltorrent-rasterbar
 
 .PHONY: native/test native/clean native clean;
 
